@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { unescape } from 'lodash'
+import Sidebar from './Sidebar'
 //import Pagination from './Pagination';
 
 export default class SearchResults extends Component {
@@ -10,24 +12,30 @@ export default class SearchResults extends Component {
       console.log('Searchresults mounted')
     }
 
-    // formatYear(date){
-    //   const year = date !== '' ? new Date(date).getFullYear() : 'pas de date'
-    //   return(
-    //     year
-    //   )
-    // }
-  
     render() {
         //const {details, index} = this.props.searchResults
         
         return (
           <React.Fragment>
-          <div className="grid-wrapper search-results">
+          <div className="search-results">
+            <Sidebar 
+                facets={ this.props.facets }
+                helper={ this.props.helper }
+                />
+            <div className="grid-wrapper">
+                {this.props.searchResults.map((item, index) => {
+                    return (
+                    <div className="grid-item" key={index}>
+                    <img src={item.image} alt=""/>
+                    <p dangerouslySetInnerHTML={{ __html:item._highlightResult.name.value }} />
+                    <p>{ unescape(item.category) }</p>
+                    </div>
+                    )
+                })}
+            </div>
           </div>
           {/* 
-            Multi
-            line
-            comment
+
             <div className="grid-wrapper">
               {this.props.searchResults.map((item, index) => {
                   return (

@@ -10,79 +10,57 @@ class App extends Component {
     constructor(props) {
         super(props)
         this.state = { 
-          allApps: [],
+          searchResults: [],
+          facets: [],
           term: ''
         }
+        this.conductSearch = this.conductSearch.bind(this)
+        this.renderHits = this.renderHits.bind(this)
+        this.client = algoliasearch('TW3Q3EK1Z6', '134f4ea451d2fd5356c794ea589dbb52' )
+        this.helper = algoliasearchHelper(this.client, 'app_scout', {
+                facets: ['category']
+            })
+    }
+    componentDidMount() {  
+        this.helper.on('result', (results) => {
+            if (results.length === 0) {
+                console.warn('no hits')
+                return
+            }
+
+            this.setState({
+                searchResults: results.hits,
+                facets: results.facets
+            })
+        })
+
+        this.helper.search()
     }
 
-    loadSearchResults = (term) => {
-        console.log(term)
-        // const sr = document.querySelector('.search-results')
-        // if(sr.classList.contains('hide')) {
-        //     sr.classList.remove('hide')
-        // }
-          
-        // QuerySearch( term, (results, pages, page) => {
-        //     this.setState({
-        //         searchResults: results,
-        //         searchResultsPages: pages,
-        //         searchResultsCurrentPage: page,
-        //         term: term
-        //     })
-        // })  
-    }
-
-    conductSearch = (term) => {
-        const client = algoliasearch('TW3Q3EK1Z6', '134f4ea451d2fd5356c794ea589dbb52' )
-        const helper = algoliasearchHelper(client, 'app_scout', 
-        {
-            facets: ['name', 'rank'],
-            disjunctiveFacets: ['category'],
-            hitsPerPage: 10,
-            maxValuesPerFacet: 10,
-            getRankingInfo: true
-          });
-
-        helper.on('result', (content) => {
-            if (content.length === 0) {
-                // If there is no result we display a friendly message
-                // instead of an empty page.
+    conductSearch(term) {
+        this.helper.on('result', (results) => {
+            if (results.length === 0) {
                 console.warn('no hits')
                 return
             }
             this.setState({
-                allApps: content,
+                searchResults: results.hits,
+                facets: results.facets,
                 term 
             })
+            this.renderHits(results)
         });
+
+        this.helper.setQuery(term).search()
     }
 
-    renderHits = (content) => {
-        
-        const client = algoliasearch('TW3Q3EK1Z6', '134f4ea451d2fd5356c794ea589dbb52' )
-        const helper = algoliasearchHelper(client, 'app_scout', 
-        {
-            facets: ['name', 'rank'],
-            disjunctiveFacets: ['category'],
-            hitsPerPage: 10,
-            maxValuesPerFacet: 10,
-            getRankingInfo: true
-          });
-
-        helper.on('result', (content) => {
-            if (content.length === 0) {
-                // If there is no result we display a friendly message
-                // instead of an empty page.
-                console.warn('no hits')
-                return
-            }
-            console.log(content);
-        });
+    renderHits(results) {
+        console.warn(results)
     }
 
 
   render() {
-    //const submitQuery = debounce((term) => {this.renderHits(term)}, 1000)
+    const submitQuery = debounce((term) => {this.conductSearch(term)}, 1000)
 
     return (
       <div className="appscout">
@@ -91,9 +69,13 @@ class App extends Component {
         </header>
         <SearchBar 
           term={ this.state.term }
-          onSearchTermChange={ this.conductSearch(this.state.term) }
+          onSearchTermChange={ submitQuery }
           />
-          <SearchResults />
+        <SearchResults
+          searchResults={ this.state.searchResults } 
+          facets={ this.state.facets }
+          helper={this.helper}
+          />
       </div>
     )
   }
