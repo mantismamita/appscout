@@ -4,10 +4,6 @@ import Facet from './Facet'
 export default class Sidebar extends Component {
     constructor(props) {
         super(props)
-        this.renderFacets= this.renderFacets.bind(this)
-        this.state = { 
-            facetValues: []
-          }
     }
 
     componentWillMount() {
@@ -17,16 +13,7 @@ export default class Sidebar extends Component {
                 console.warn('no hits')
                 return
             }
-
-            // this.setState({
-            //     facetValues: results.getFacetValues(name)
-            // })   
         })
-    }
-
-    renderFacets(results, name) {
-        let facetValues = results.getFacetValues(name);
-
     }
 
     render() {

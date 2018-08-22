@@ -11,6 +11,7 @@ class App extends Component {
         super(props)
         this.state = { 
           searchResults: [],
+          allCats: [],
           facets: [],
           term: ''
         }
@@ -19,7 +20,7 @@ class App extends Component {
         this.client = algoliasearch('TW3Q3EK1Z6', '134f4ea451d2fd5356c794ea589dbb52' )
         this.helper = algoliasearchHelper(this.client, 'app_scout', {
                 facets: ['category']
-            })
+        })
     }
     componentDidMount() {  
         this.helper.on('result', (results) => {
@@ -30,8 +31,9 @@ class App extends Component {
 
             this.setState({
                 searchResults: results.hits,
-                facets: results.facets
+                facets: results.facets,
             })
+            console.log('componentDidMount called from App.js')
         })
 
         this.helper.search()

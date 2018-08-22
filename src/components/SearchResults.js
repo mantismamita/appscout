@@ -13,7 +13,6 @@ export default class SearchResults extends Component {
     }
 
     render() {
-        //const {details, index} = this.props.searchResults
         
         return (
           <React.Fragment>
@@ -21,6 +20,7 @@ export default class SearchResults extends Component {
             <Sidebar 
                 facets={ this.props.facets }
                 helper={ this.props.helper }
+                catsList={ this.props.catsList }
                 />
             <div className="grid-wrapper">
                 {this.props.searchResults.map((item, index) => {
