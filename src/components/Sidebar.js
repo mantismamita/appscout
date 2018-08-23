@@ -4,6 +4,9 @@ import Facet from './Facet'
 export default class Sidebar extends Component {
     constructor(props) {
         super(props)
+        this.state = { 
+            allCats: []
+        }
     }
 
     componentWillMount() {
@@ -14,6 +17,7 @@ export default class Sidebar extends Component {
                 return
             }
         })
+
     }
 
     render() {

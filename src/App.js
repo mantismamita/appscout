@@ -1,9 +1,24 @@
-import React, { Component } from 'react'
+import React, { Component, createContext } from 'react'
 import SearchBar from './components/Searchbar'
 import SearchResults from './components/SearchResults'
 import { debounce } from 'lodash'
 var algoliasearch = require('algoliasearch');
 var algoliasearchHelper = require('algoliasearch-helper');
+
+const GlobalContext= createContext()
+
+class GlobalProvide extends Component {
+    state = {
+        allcats: []
+    }
+    render() {
+        return (
+            <GlobalContext.Provider>
+            {this.props.children}
+            </GlobalContext.Provider>
+        )
+    }
+}
 
 class App extends Component {
 
@@ -11,7 +26,6 @@ class App extends Component {
         super(props)
         this.state = { 
           searchResults: [],
-          allCats: [],
           facets: [],
           term: ''
         }
@@ -28,12 +42,10 @@ class App extends Component {
                 console.warn('no hits')
                 return
             }
-
             this.setState({
                 searchResults: results.hits,
-                facets: results.facets,
+                facets: results.facets
             })
-            console.log('componentDidMount called from App.js')
         })
 
         this.helper.search()

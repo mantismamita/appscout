@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import FacetItem from './FacetItem'
 
 export default class Facet extends Component {
     constructor(props) {
@@ -10,19 +11,15 @@ export default class Facet extends Component {
     handleClick(e, key){
         const helper = this.props.helper
         e.preventDefault();
-        console.warn(key)
+        console.warn(helper.toggleRefine)
 
         helper.toggleRefine('category', key).search()
+        //helper.addFacetRefinement('category', key).search()
     }
     
     renderFacets(key){
-        const data = this.props.itemData
         return (
-            <li className="facet-item" key={key}>
-                <a ref={key} onClick={(e) => this.handleClick(e, key)}>
-                    {key} <span>{data[key]}</span>
-                </a>
-            </li>
+            <FacetItem data={this.props.itemData} name={key} handleClick={this.handleClick}/>
         )
     }
 
