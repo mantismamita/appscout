@@ -27,7 +27,7 @@ export default class SearchResults extends Component {
                     return (
                     <div className="grid-item" key={index}>
                     <img src={item.image} alt=""/>
-                    <p dangerouslySetInnerHTML={{ __html:item._highlightResult.name.value }} />
+                    <a href={item.link}><p dangerouslySetInnerHTML={{ __html:item._highlightResult.name.value }} /></a>
                     <p>{ unescape(item.category) }</p>
                     </div>
                     )

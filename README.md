@@ -4,7 +4,20 @@ AppScout is a single page app using [Algolia Search](https://www.algolia.com)  a
 
 ## Installation
 
+Clone this repository
+go to the index 
+`cd app-scout`
+install packages
+`npm install`
+
 ## Usage
+
+To view the development build of the app
+`npm start`
+
+To view build for a production version you can install a statics server
+`npm install -g serve`
+`serve -s build`
 
 ## Contributing
 

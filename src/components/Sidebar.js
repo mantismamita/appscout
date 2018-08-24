@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import Facet from './Facet'
+import { GlobalContext } from "./GlobalContext";
 
 export default class Sidebar extends Component {
     constructor(props) {
         super(props)
-        this.state = { 
-            allCats: []
-        }
     }
 
     componentWillMount() {
@@ -17,7 +15,6 @@ export default class Sidebar extends Component {
                 return
             }
         })
-
     }
 
     render() {
@@ -30,6 +27,11 @@ export default class Sidebar extends Component {
                 </div>
                 )
             })}
+            <GlobalContext.Consumer>
+                {context => (
+                    <button>{context}</button>
+                )}
+            </GlobalContext.Consumer>
             </div>
         )
     }

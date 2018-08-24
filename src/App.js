@@ -1,24 +1,10 @@
-import React, { Component, createContext } from 'react'
+import React, { Component } from 'react'
 import SearchBar from './components/Searchbar'
 import SearchResults from './components/SearchResults'
 import { debounce } from 'lodash'
+import { GlobalContext } from './components/GlobalContext'
 var algoliasearch = require('algoliasearch');
 var algoliasearchHelper = require('algoliasearch-helper');
-
-const GlobalContext= createContext()
-
-class GlobalProvide extends Component {
-    state = {
-        allcats: []
-    }
-    render() {
-        return (
-            <GlobalContext.Provider>
-            {this.props.children}
-            </GlobalContext.Provider>
-        )
-    }
-}
 
 class App extends Component {
 
@@ -27,7 +13,9 @@ class App extends Component {
         this.state = { 
           searchResults: [],
           facets: [],
-          term: ''
+          term: '',
+          toggleButton: 'See all Categories'
+        
         }
         this.conductSearch = this.conductSearch.bind(this)
         this.renderHits = this.renderHits.bind(this)
@@ -73,24 +61,28 @@ class App extends Component {
     }
 
 
+
+
   render() {
     const submitQuery = debounce((term) => {this.conductSearch(term)}, 1000)
 
     return (
-      <div className="appscout">
-        <header className="appscout-header">
-          <h1 className="appscout-title">App Scout</h1>
-        </header>
-        <SearchBar 
-          term={ this.state.term }
-          onSearchTermChange={ submitQuery }
-          />
-        <SearchResults
-          searchResults={ this.state.searchResults } 
-          facets={ this.state.facets }
-          helper={this.helper}
-          />
-      </div>
+        <GlobalContext.Provider value={this.state.toggleButton}>
+            <div className="appscout">
+                <header className="appscout-header">
+                <h1 className="appscout-title">App Scout</h1>
+                </header>
+                <SearchBar 
+                term={ this.state.term }
+                onSearchTermChange={ submitQuery }
+                />
+                <SearchResults
+                searchResults={ this.state.searchResults } 
+                facets={ this.state.facets }
+                helper={this.helper}
+                />
+            </div>
+        </GlobalContext.Provider>
     )
   }
 }
