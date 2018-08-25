@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import SearchBar from './components/Searchbar'
 import SearchResults from './components/SearchResults'
-import { debounce } from 'lodash'
 import { GlobalContext } from './components/GlobalContext'
 var algoliasearch = require('algoliasearch');
 var algoliasearchHelper = require('algoliasearch-helper');
@@ -15,7 +14,6 @@ class App extends Component {
           facets: [],
           term: '',
           toggleButton: 'See all Categories'
-        
         }
         this.conductSearch = this.conductSearch.bind(this)
         this.renderHits = this.renderHits.bind(this)
@@ -64,7 +62,7 @@ class App extends Component {
 
 
   render() {
-    const submitQuery = debounce((term) => {this.conductSearch(term)}, 1000)
+    const submitQuery = (term) => {this.conductSearch(term)}
 
     return (
         <GlobalContext.Provider value={this.state.toggleButton}>
