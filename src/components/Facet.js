@@ -19,7 +19,7 @@ export default class Facet extends Component {
     
     renderFacets(key){
         return (
-            <FacetItem data={this.props.itemData} name={key} handleClick={this.handleClick}/>
+            <FacetItem data={this.props.itemData} name={key} handleClick={this.handleClick} key={key}/>
         )
     }
 
@@ -27,7 +27,7 @@ export default class Facet extends Component {
         
         return (
             <React.Fragment>
-            <p>{this.props.itemName}</p>
+            <p>Filter by {this.props.itemName}</p>
             <ul>
                 { Object.keys(this.props.itemData).map(this.renderFacets) }
             </ul>

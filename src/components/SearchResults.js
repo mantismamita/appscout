@@ -26,7 +26,7 @@ export default class SearchResults extends Component {
                 {this.props.searchResults.map((item, index) => {
                     return (
                     <div className="grid-item" key={index}>
-                    <img src={item.image} alt=""/>
+                    <img src={item.image} alt={item.name}/>
                     <a href={item.link}><p dangerouslySetInnerHTML={{ __html:item._highlightResult.name.value }} /></a>
                     <p>{ unescape(item.category) }</p>
                     </div>

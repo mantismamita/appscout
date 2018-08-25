@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background: chartreuse;
+  background: red;
 }
 
 .appscout {
@@ -12,16 +12,13 @@ body {
   position: relative;
   width: 90%;
   margin: 0 auto;
-}
 
-.appscout .app-logo {
-    width: 220px;
-    height: 36px;
+  
+  & .appscout-header {
+    text-align: center;
   }
-
-.appscout-header {
-  text-align: center;
 }
+
 
 section.wrapper + section.wrapper,
 .wrapper.search-results {
@@ -189,20 +186,7 @@ input:focus {
   /* -webkit-focus-ring-color = '#5B9DD9' */
   outline: none;
   box-shadow: 0px 0.2em 2.5em#a6d1f8;
-  -webkit-transform: scale(1.015);
-          transform: scale(1.015); 
-}
-
-input::-webkit-input-placeholder {
-  color: #586E94;
-}
-
-input:-ms-input-placeholder {
-  color: #586E94;
-}
-
-input::-ms-input-placeholder {
-  color: #586E94;
+  transform: scale(1.015); 
 }
 
 input::placeholder {
