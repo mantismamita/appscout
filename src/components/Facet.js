@@ -13,8 +13,8 @@ export default class Facet extends Component {
         e.preventDefault();
         console.warn(helper.toggleRefine)
 
-        helper.toggleRefine('category', key).search()
-        //helper.addFacetRefinement('category', key).search()
+        //helper.toggleFacetRefinement('category', key).search()
+        helper.addFacetRefinement('category', key).search()
     }
     
     renderFacets(key){

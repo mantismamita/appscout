@@ -36,17 +36,17 @@ export default class SearchResults extends Component {
                                 </div>
                             );
                         })}
+                        <GlobalContext.Consumer>
+                        {context => (
+                            <Pagination
+                            allPages={this.props.pages}
+                            currentPage={this.props.page}
+                            helper={context.helper}
+                            />
+                        )}
+                        </GlobalContext.Consumer>
                     </div>
                 </div>
-                <GlobalContext.Consumer>
-                {context => (
-                    <Pagination
-                    allPages={this.props.pages}
-                    currentPage={this.props.page}
-                    helper={context.helper}
-                    />
-                )}
-                </GlobalContext.Consumer>
                 
             </React.Fragment>
         );

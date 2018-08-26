@@ -53,6 +53,8 @@ class App extends Component {
             this.setState({
                 searchResults: results.hits,
                 facets: results.facets,
+                pages: results.nbPages - 1,
+                page: results.page + 1,
                 term 
             })
             this.renderHits(results)
