@@ -18,7 +18,6 @@ class App extends Component {
           page: 0
         }
         this.conductSearch = this.conductSearch.bind(this)
-        this.renderHits = this.renderHits.bind(this)
         this.client = algoliasearch('TW3Q3EK1Z6', '134f4ea451d2fd5356c794ea589dbb52' )
         this.helper = algoliasearchHelper(this.client, 'app_scout', {
                 facets: ['category']
@@ -37,8 +36,6 @@ class App extends Component {
                 pages: results.nbPages - 1,
                 page: results.page + 1
             })
-
-            console.log(results)
         })
 
         this.helper.search()
@@ -57,18 +54,10 @@ class App extends Component {
                 page: results.page + 1,
                 term 
             })
-            this.renderHits(results)
         });
 
         this.helper.setQuery(term).search()
     }
-
-    renderHits(results) {
-        console.warn(results)
-    }
-
-
-
 
   render() {
     const submitQuery = (term) => {this.conductSearch(term)}
@@ -79,6 +68,7 @@ class App extends Component {
 
     return (
         <GlobalContext.Provider value={global}>
+            {this.props.children}
             <div className="appscout">
                 <header className="appscout-header">
                 <h1 className="appscout-title">App Scout</h1>

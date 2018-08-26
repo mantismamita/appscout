@@ -11,9 +11,7 @@ export default class Facet extends Component {
     handleClick(e, key){
         const helper = this.props.helper
         e.preventDefault();
-        console.warn(helper.toggleRefine)
 
-        //helper.toggleFacetRefinement('category', key).search()
         helper.addFacetRefinement('category', key).search()
     }
     
@@ -23,11 +21,22 @@ export default class Facet extends Component {
         )
     }
 
+    showFacetList(e) {
+        if (e.target.classList.contains('up')){
+            e.target.classList.remove('up')
+            e.target.classList.add('down')
+            e.target.parentElement.classList.remove('show')
+        } else if(e.target.classList.contains('down') || !e.target.classList.contains('up')){
+            e.target.classList.remove('down')
+            e.target.classList.add('up')
+            e.target.parentElement.classList.add('show')
+        } 
+    }
+
     render() {
-        
         return (
             <React.Fragment>
-            <p>Filter by {this.props.itemName}</p>
+            <p className="filter-name" onClick={this.showFacetList}>Filter by {this.props.itemName}</p>
             <ul>
                 { Object.keys(this.props.itemData).map(this.renderFacets) }
             </ul>

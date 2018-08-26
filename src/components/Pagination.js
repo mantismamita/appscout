@@ -18,8 +18,8 @@ export default class Pagination extends Component {
         helper
             .setPage(pageNum -1).search()
 
-		console.clear()
-		console.log(pageNum)
+		// console.clear()
+		// console.log(pageNum)
 		this.setState({
 			currentPage: pageNum,
 			hasPrevButton: pageNum !== 1,
@@ -33,12 +33,27 @@ export default class Pagination extends Component {
 	
 	onPrevButtonClick(e, page) {
 		const helper = this.props.helper
-        helper.setPage(page).previousPage().search()
-
-		console.log(page)
+		
 		this.setState({
-			currentPage: page -1
+			currentPage: page -1,
+			hasPrevButton: page -1 !== 1,
+			hasNextButton: true
 		})
+		helper.setPage(page).previousPage().search()
+	}
+
+	onNextButtonClick(e, page, totalPages) {
+		const helper = this.props.helper
+		const lastPage = (page +1 === totalPages)
+		
+		this.setState({
+			currentPage: page +1,
+			hasPrevButton: true,
+			hasNextButton: !lastPage
+		})
+		if(!lastPage){
+			helper.setPage(page).nextPage().search()
+		}
 	}
 	
 
@@ -48,7 +63,7 @@ export default class Pagination extends Component {
 		let currPage = this.props.currentPage
   
 		const renderpages = N.map((item, index) => {
-			let isCurrentPage = (index +1 === currPage) ? 'cdp_i active' : 'cdp_i'
+			let isCurrentPage = (index +1 === currPage) ? 'pagination_i active' : 'pagination_i'
 			return (
 				<button 
 					className={ isCurrentPage } 
@@ -63,7 +78,7 @@ export default class Pagination extends Component {
 		if (this.state.hasPrevButton) {
 			renderPrevBtn = 
 			<button 
-				className="cdp_i"
+				className="pagination_i"
 				onClick={(e) => this.onPrevButtonClick(e, this.props.currentPage -1)}>
 				&lsaquo;
 			</button>
@@ -73,14 +88,14 @@ export default class Pagination extends Component {
 		if(this.state.hasNextButton !== false) {
 			renderNextBtn = 
 			<button 
-				className="cdp_i"
-				onClick={(e) => this.onButtonClick(e)}>
+				className="pagination_i"
+				onClick={(e) => this.onPrevButtonClick(e, this.props.currentPage +1, maxPages)}>
 				&rsaquo;
 			</button>
 		}
 
 		return (
-			<div className="pagination cdp" actpage="1">
+			<div className="pagination" actpage="1">
 					{renderPrevBtn}
 					{renderpages}
 					{renderNextBtn}

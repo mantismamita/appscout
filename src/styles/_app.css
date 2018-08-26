@@ -17,48 +17,16 @@
     & .appscout-header {
         text-align: center;
     }
-
-    & section.wrapper + section.wrapper,
-    & .wrapper.search-results {
-        margin-bottom: 45px;
-        border-bottom: 1px solid #586e94;
-        padding-bottom: 45px;
-    }
-
-    & .wrapper {
-        max-width: 80%;
-        margin: 0 auto;
-    }
-
-    & .filters {
-        display: flex;
-        justify-content: flex-start;
-        margin-bottom: 30px;
-        font-size: 12px;
-        color: #586e94;
-    }
-
-    & .alpha-filter {
-        margin-right: 2rem;
-    }
-
-    & .filter-group [class$="filter"] {
-        display: inline-block;
-    }
-
-    & .date-filter input {
-        width: 121px;
-        border: 1px solid #586e94;
-        border-radius: 14px;
-    }
-
+   
     & .grid-wrapper {
-        display: grid;
-        grid-gap: 20px;
-        grid-template-columns: repeat(auto-fill, 180px);
-        grid-auto-rows: 300px;
-        width: 100%;
-        justify-content: space-between;
+        @media (--medium-viewport) {
+            display: grid;
+            grid-gap: 20px;
+            grid-template-columns: repeat(auto-fill, 180px);
+            grid-auto-rows: 300px;
+            width: 100%;
+            justify-content: space-between;
+        }
     }
 
     & .sidebar {
@@ -86,20 +54,69 @@
                 margin: 0;
             }
         }
+
+        & .facet ul {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 500ms;
+            @media (--medium-viewport) {
+                max-height: 1vh;
+            }
+        }
+        & .facet.show ul {
+            max-height: 400px;
+        }
+
+        & .filter-name ,
+        & .filter-name.down {
+            &:after {
+                content: url("../svgs/dropdownarrow.svg");
+                display: inline-block;
+                margin-left: 5px;
+                @media (--medium-viewport) {
+                    content: "";
+                }
+            }
+        }
+
+        & .filter-name.up {
+            &:after {
+                content: url("../svgs/dropdownarrow.svg");
+                display: inline-block;
+                margin-left: 5px;
+                transform: rotate(180deg);
+                @media (--medium-viewport) {
+                    content: "";
+                }
+            }
+        }
         
     }
 
     & .grid-item {
-        padding: 0 10px;
+        display: flex;
+        
+        @media (--medium-viewport) {
+            display: block;
+            padding: 0 10px;
+        }
+
+        & img {
+            width: 160px;
+            min-width: 160px;
+            height: 160px;
+            margin: 20px 10px 20px 0;
+            background: aliceblue;
+            display: block;
+            @media (--medium-viewport) {
+                margin: 0 auto;
+            }
+        }
+        & .app-info {
+            margin: 20px 0 0 0;
+        }
     }
 
-    & .grid-item img {
-        width: 160px;
-        height: 160px;
-        margin: 0 auto;
-        background: aliceblue;
-        display: block;
-    }
 
     & .search-results {
         width: 90%;
@@ -175,29 +192,18 @@
         }
     }
 
-    /* & .pagination {
-        display: inline-block;
-        padding-left: 0;
-        margin: 20px 0;
-        border-radius: 4px;
-    }
-    & .pagination > li {
-        display: inline;
-    }
-    
-    & .pagination > li a {
-        color: white;
-    } */
-    .cdp {
+    .pagination {
         position: relative;
         text-align: center;
         font-size: 0;
         z-index: 6;
-        grid-column: span 4;
-        justify-self: center;
-        align-self: baseline;
+        @media (--medium-viewport) {
+            grid-column: span 4;
+            justify-self: center;
+            align-self: baseline;
+        }
       }
-      .cdp_i {
+      .pagination_i {
         font-size: 16px;
         text-decoration: none;
         display: inline-block;
@@ -214,7 +220,7 @@
         letter-spacing: .03em;
       }
       
-      .cdp_i.active {
+      .pagination_i.active {
         border: 1px solid var(--primary-colour);
         background-color: var(--primary-colour);
         color: #ffffff;

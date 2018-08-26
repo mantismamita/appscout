@@ -3,8 +3,29 @@ import Facet from './Facet'
 import { GlobalContext } from "./GlobalContext";
 
 export default class Sidebar extends Component {
+    constructor(props) {
+        super(props)
+        this.removeFilters = this.removeFilters.bind(this)
+        this.renderConsumer = this.renderConsumer.bind(this)
+    }
     removeFilters(helper) {
         helper.removeFacetRefinement('category').search()
+    }
+
+    renderConsumer(){
+        return (
+            <GlobalContext.Consumer>
+                {({ button, helper }) => {
+                    return (
+                        <div>
+                        { helper.hasRefinements('category') 
+                        ? <button onClick={ e => this.removeFilters(helper) }>{button}</button>
+                        : '' }
+                        </div>
+                    )
+                }}
+            </GlobalContext.Consumer>
+        )
     }
 
     render() {
@@ -13,15 +34,11 @@ export default class Sidebar extends Component {
             {this.props.facets.map((item, index) => {
                 return (
                 <div className="facet" key={index}>
-                    <Facet itemData={item.data} itemName={item.name} helper={this.props.helper}/>
+                    <Facet itemData={item.data} itemName={item.name} helper={this.props.helper} />
                 </div>
                 )
             })}
-            <GlobalContext.Consumer>
-                {context => (
-                    <button onClick={(e)=> this.removeFilters(context.helper) }>{context.button}</button>
-                )}
-            </GlobalContext.Consumer>
+            {this.renderConsumer()}
             </div>
         )
     }
