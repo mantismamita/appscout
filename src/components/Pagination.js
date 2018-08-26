@@ -5,7 +5,6 @@ export default class Pagination extends Component {
 		super(props)
 		this.state = {
 		  currentPage: this.props.page,
-		  appsPerPage: 20,
 		  upperPageBound: 4,
 		  lowerPageBound: 0,
 		  isPrevBtnActive: 'disabled',
@@ -14,13 +13,16 @@ export default class Pagination extends Component {
 		}
 	}
 
-	onButtonClick(genreID, year, sort, page) {
-		//let listid = Number(event.target.key);
-		this.props.onPageChange(genreID, year, sort, page)
-		console.log(genreID, year, sort, page)
+	onButtonClick(e, numPage) {
+		const helper = this.props.helper
+		const pageNum = parseInt(e.target.innerText)
+        helper
+            .setPage(pageNum).search()
+			
+			console.dir(pageNum)
 
 		this.setState({
-			currentPage: page
+			currentPage: pageNum
 		})
 	}
 
@@ -57,15 +59,14 @@ export default class Pagination extends Component {
   	}
 
     render() {
-		const maxPages = this.props.allPages > 10 ? 10 : this.props.allPages
-		//const maxPages = this.props.allPages 
+		const maxPages = this.props.allPages 
 		var N = Array.apply(null, {length: maxPages}).map(Number.call, Number)
-		let currPage = this.props.page
+		let currPage = this.props.currentPage
 		const prev = currPage !== 1 ? <button className="cdp_i">p</button> : ''
 		const prevPage = this.state.currentPage -1
 		const nextPage = this.state.currentPage +1
 
-		const { apps, currentPage, appsPerPage,upperPageBound,lowerPageBound,isPrevBtnActive,isNextBtnActive } = this.state;
+		const { currentPage, appsPerPage,upperPageBound,lowerPageBound,isPrevBtnActive,isNextBtnActive } = this.state;
   
 		const renderpages = N.map((item, index) => {
 			let isCurrentPage = (index + 1 === currPage) ? 'cdp_i is-current' : 'cdp_i'
@@ -73,7 +74,7 @@ export default class Pagination extends Component {
 				<button 
 					className={ isCurrentPage } 
 					key={index} 
-					onClick={(e) => this.onButtonClick(this.props.genreID, this.props.year, this.props.sort, parseInt(e.target.innerText, 10))}>
+					onClick={(e) => this.onButtonClick(e)}>
 					{ index + 1 }
 				</button>
 			)
@@ -84,14 +85,14 @@ export default class Pagination extends Component {
 			renderPrevBtn = 
 			<button 
 				className="cdp_i"
-				onClick={(e) => this.onButtonClick(this.props.genreID, this.props.year, this.props.sort, prevPage )}>
+				onClick={(e) => this.onButtonClick(e)}>
 				&lsaquo;
 			</button>
 		} else {
 			renderPrevBtn = 
 			<button 
 				className="cdp_i"
-				onClick={(e) => this.onButtonClick(this.props.genreID, this.props.year, this.props.sort, prevPage )}>
+				onClick={(e) => this.onButtonClick(e)}>
 				&lsaquo;
 			</button>
 		}
@@ -101,7 +102,7 @@ export default class Pagination extends Component {
 			renderNextBtn = 
 			<button 
 				className="cdp_i"
-				onClick={(e) => this.onButtonClick(this.props.genreID, this.props.year, this.props.sort, nextPage )}>
+				onClick={(e) => this.onButtonClick(e)}>
 				&rsaquo;
 			</button>
 		}
@@ -109,13 +110,13 @@ export default class Pagination extends Component {
 			renderNextBtn = 
 			<button 
 				className="cdp_i"
-				onClick={(e) => this.onButtonClick(this.props.genreID, this.props.year, this.props.sort, nextPage )}>
+				onClick={(e) => this.onButtonClick(e)}>
 				&rsaquo;
 			</button>
 		}
 
 		return (
-			<div className="content_detail__pagination cdp" actpage="1">
+			<div className="pagination cdp" actpage="1">
 					{renderPrevBtn}
 					{renderpages}
 					{renderNextBtn}

@@ -50,7 +50,6 @@ img:after {
     content: attr(alt);
     font-size: 14px;
     font-weight: bold;
-    color: var(--primary-color);
     display: block;
     position: absolute;
     z-index: 2;
@@ -71,12 +70,10 @@ button {
     padding: 5px;
     height: 44px;
     min-width: 150px;
-    border: 1px solid #586e94;
+    border: 2px solid var(--primary-colour);
     box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 14px;
-    color: #586e94;
-    -webkit-appearance: none;
-    -webkit-border-radius: 14px;
+    border-radius: 24px;
+    color: var(--secondary-colour);
 }
 
 button {

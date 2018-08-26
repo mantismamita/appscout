@@ -194,6 +194,7 @@ module.exports = {
                         plugins: () => [
                           require('postcss-flexbugs-fixes'),
                           require('postcss-nested'),
+                          require('postcss-custom-media'),
                           autoprefixer({
                             browsers: [
                               '>1%',

@@ -29,7 +29,7 @@ export default class Sidebar extends Component {
             })}
             <GlobalContext.Consumer>
                 {context => (
-                    <button>{context}</button>
+                    <button>{context.button}</button>
                 )}
             </GlobalContext.Consumer>
             </div>
