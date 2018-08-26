@@ -60,7 +60,7 @@
             overflow: hidden;
             transition: all 500ms;
             @media (--medium-viewport) {
-                max-height: 1vh;
+                max-height: 90vh;
             }
         }
         & .facet.show ul {
@@ -91,6 +91,11 @@
             }
         }
         
+        & button {
+            background-color: var(--primary-colour);
+            color: #ffffff;
+            font-size: 14px;
+        }
     }
 
     & .grid-item {
@@ -212,10 +217,10 @@
         height: 38px;
         min-width: 38px;
         border-radius: 38px;
-        border: 1px solid #586E94;
+        border: 2px solid var(--primary-colour);
         line-height: 38px;
         padding: 0;
-        color: #586E94;
+        color: var(--primary-colour);
         font-weight: 700;
         letter-spacing: .03em;
       }

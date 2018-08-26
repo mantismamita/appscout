@@ -22,6 +22,7 @@ export default class Pagination extends Component {
 		// console.log(pageNum)
 		this.setState({
 			currentPage: pageNum,
+			allPages: totalPages,
 			hasPrevButton: pageNum !== 1,
 			hasNextButton: !lastPage
 		})
@@ -33,7 +34,6 @@ export default class Pagination extends Component {
 	
 	onPrevButtonClick(e, page) {
 		const helper = this.props.helper
-		
 		this.setState({
 			currentPage: page -1,
 			hasPrevButton: page -1 !== 1,
@@ -44,15 +44,15 @@ export default class Pagination extends Component {
 
 	onNextButtonClick(e, page, totalPages) {
 		const helper = this.props.helper
-		const lastPage = (page +1 === totalPages)
+		const lastPage = (page -1 === totalPages)
 		
 		this.setState({
-			currentPage: page +1,
+			currentPage: page -1,
 			hasPrevButton: true,
 			hasNextButton: !lastPage
 		})
 		if(!lastPage){
-			helper.setPage(page).nextPage().search()
+			helper.setPage(page -1).nextPage().search()
 		}
 	}
 	
@@ -75,7 +75,7 @@ export default class Pagination extends Component {
 		})
 
 		let renderPrevBtn = null;
-		if (this.state.hasPrevButton) {
+		if (this.state.hasPrevButton && (this.state.allPages !== 0 || this.state.currentPage !== 0)) {
 			renderPrevBtn = 
 			<button 
 				className="pagination_i"
@@ -85,11 +85,11 @@ export default class Pagination extends Component {
 		} 
 
 		let renderNextBtn = null;
-		if(this.state.hasNextButton !== false) {
+		if(this.state.hasNextButton && (this.state.allPages !== 0 || this.state.allPages > this.state.currentPage)) {
 			renderNextBtn = 
 			<button 
 				className="pagination_i"
-				onClick={(e) => this.onPrevButtonClick(e, this.props.currentPage +1, maxPages)}>
+				onClick={(e) => this.onNextButtonClick(e, this.props.currentPage, maxPages)}>
 				&rsaquo;
 			</button>
 		}
