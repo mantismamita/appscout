@@ -119,6 +119,18 @@
         }
         & .app-info {
             margin: 20px 0 0 0;
+            overflow: hidden;
+            max-width: 180px;
+            & a {
+                color: var(--primary-colour);
+            }
+        }
+        & .app-name:before {
+            content: url("../svgs/link.svg");
+            margin-right: 2px;
+        }
+        & .app-category {
+            font-weight: bold;
         }
     }
 
