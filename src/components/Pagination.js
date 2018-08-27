@@ -13,7 +13,7 @@ export default class Pagination extends Component {
 
 	onButtonClick(e, totalPages) {
 		const helper = this.props.helper
-		const pageNum = parseInt(e.target.innerText)
+		const pageNum = parseInt(e.target.innerText, 10)
 		const lastPage = (pageNum === totalPages)
         helper
             .setPage(pageNum -1).search()
